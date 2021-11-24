@@ -9,7 +9,7 @@ const config = {
   title: "BucketWS",
   tagline: "API for Public & Private files over a CDN",
   url: "https://bucket.listws.com",
-  baseUrl: "/",
+  baseUrl: "/docs/bucket/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
@@ -18,7 +18,7 @@ const config = {
   scripts: [
     "https://bucket.listws.com/_PWSR_/lib/pkg/v2/pagews/index.js",
     "https://bucket.listws.com/_PWSR_/lib/basicLightbox/basicLightbox.min.js",
-    "/js/images.js"
+    "/docs/bucket/js/images.js"
   ],
   stylesheets: [
     "https://bucket.listws.com/_PWSR_/lib/basicLightbox/basicLightbox.min.css"
