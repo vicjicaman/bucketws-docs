@@ -32,6 +32,22 @@ query SiteBucketGet($siteid: String!, $name: String!) {
               minSize
               maxSize
               preview
+              size
+
+              policies {
+                policyid
+                config
+              }
+
+              metrics {
+                name
+                value
+                typeid
+                policy {
+                  policyid
+                  config
+                }
+              }
             }
           }
         }
@@ -52,7 +68,10 @@ const {
   exts,
   minSize,
   maxSize,
-  preview
+  preview,
+  size,
+  policies,
+  metrics
 } = await instance.BucketFile.get({
   name: "test-public"
 });
@@ -125,6 +144,7 @@ query SiteBucketList($siteid: String!) {
               minSize
               maxSize
               preview
+              size
             }
           }
         }
@@ -159,6 +179,7 @@ input SiteBucketCreateInput {
   minSize: Int!
   maxSize: Int!
   preview: Boolean!
+  size: Int!
 }
 ```
 
@@ -184,7 +205,23 @@ mutation SiteBucketCreate(
               minSize
               maxSize
               preview
+              size
               status
+
+              policies {
+                policyid
+                config
+              }
+
+              metrics {
+                name
+                value
+                typeid
+                policy {
+                  policyid
+                  config
+                }
+              }
             }
           }
         }
@@ -206,14 +243,18 @@ const {
   minSize,
   maxSize,
   preview,
-  status
+  size,
+  status,
+  policies,
+  metrics
 } = await instance.Bucket.create({
   name: `account-vicjicama`,
   private: false,
   exts: ["csv"],
   minSize: 100,
   maxSize: 1000000,
-  preview: false
+  preview: false,
+  size: 25000000
 });
 ```
 
@@ -234,6 +275,7 @@ input SiteBucketInput {
   minSize: Int!
   maxSize: Int!
   preview: Boolean!
+  size: Int!
 }
 ```
 
@@ -260,7 +302,24 @@ mutation SiteBucketUpdate(
                 minSize
                 maxSize
                 preview
+                size
                 status
+
+                policies {
+                  policyid
+                  config
+                }
+
+                metrics {
+                  name
+                  value
+                  typeid
+                  policy {
+                    policyid
+                    config
+                  }
+                }
+
               }
             }
           }
@@ -283,13 +342,15 @@ const {
   minSize,
   maxSize,
   preview,
-  status
+  size,
+  status, metrics, policies
 } = await instance.Bucket.update({
   name: `account-vicjicama`,
   exts: ["csv", "json"],
   minSize: 300,
   maxSize: 5000000,
-  preview: false
+  preview: false,
+  size: 25000000
 });
 ```
 

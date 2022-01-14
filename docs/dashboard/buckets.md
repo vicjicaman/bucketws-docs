@@ -44,3 +44,7 @@ You can easily use a bucket manually or with the API, upload files with tags usi
 <div className="image-container">
 <img alt="Add file" className="image" data-src="https://util-files.listws.com/_PWSR_/files/minimaps/buckets/bucketws-docs/c8dc40f53717f4e8e6af418b19f17e99.png/xs.webp" />
 </div>
+
+### Metrics per bucket
+
+Review all the metrics related to an individual bucket, file count and bucket size
