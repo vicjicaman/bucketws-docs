@@ -30,6 +30,7 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
+          showLastUpdateTime: true,
           // Please change this to your repo.
           editUrl: "https://bucket.listws.com"
         },
