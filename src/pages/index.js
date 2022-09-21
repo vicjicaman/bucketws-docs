@@ -17,7 +17,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            BucketWS + Heroku Tutorial - 3min ⏱️
+            Getting started - 3min ⏱️
           </Link>
         </div>
       </div>
@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="API for public & private files over a CDN">
+      description="API for images, zip & private files">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

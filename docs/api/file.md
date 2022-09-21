@@ -11,34 +11,29 @@ import TabItem from '@theme/TabItem';
 
 Get a list of files for a bucket
 
-- **siteid**: This is your API Key
 - **name**: Bucket name
 
 <Tabs>
   <TabItem value="graphql" label="GraphQL" default>
 
 ```graphql
-query SiteBucketFileList($siteid: String!, $name: String!) {
+query BucketFileList($name: String!) {
   viewer {
     account {
-      sites {
-        site(siteid: $siteid) {
-          buckets {
-            bucket(name: $name) {
-              files {
-                list {
-                  id
-                  fileid
-                  ext
-                  size
-                  status
-                  uploader
-                  tags
-                  metadata
-                  createdAt
-                  updatedAt
-                }
-              }
+      buckets {
+        get(name: $name) {
+          files {
+            list {
+              id
+              fileid
+              ext
+              size
+              status
+              uploader
+              tags
+              metadata
+              createdAt
+              updatedAt
             }
           }
         }
@@ -52,7 +47,7 @@ query SiteBucketFileList($siteid: String!, $name: String!) {
   <TabItem value="nodejs" label="NodeJS">
 
 ```js
-const list = await instance.BucketFile.list({ name: "test-public" });
+const list = await instance.BucketFile.list("images-public");
 ```
 
   </TabItem>
@@ -62,13 +57,12 @@ const list = await instance.BucketFile.list({ name: "test-public" });
 
 Upload a file to a bucket
 
-- **siteid**: This is your API Key
 - **name**: Bucket name
 - **fileid**: Unique fileid within the bucket, this is usually the file content hash, this fileid MUST ends with the file extension
-- **input**: An object SiteBucketFileInput with the input details for the file
+- **input**: An object BucketFileInput with the input details for the file
 
 ```graphql
-input SiteBucketFileInput {
+input BucketFileInput {
   tags: [String]!
   metadata: JSON
 }
@@ -78,18 +72,15 @@ input SiteBucketFileInput {
   <TabItem value="graphql" label="GraphQL" default>
 
 ```graphql
-mutation SiteBucketFileUpload(
-  $siteid: String!
+mutation BucketFileUpload(
   $name: String!
   $fileid: String!
-  $input: SiteBucketFileInput!
+  $input: BucketFileInput!
 ) {
   viewer {
     account {
-      sites {
-        site(siteid: $siteid) {
           buckets {
-            bucket(name: $name) {
+            get(name: $name) {
               files {
                 upload(fileid: $fileid, input: $input) {
                   form
@@ -100,8 +91,6 @@ mutation SiteBucketFileUpload(
                   }
                 }
               }
-            }
-          }
         }
       }
     }
@@ -116,8 +105,7 @@ mutation SiteBucketFileUpload(
 const {
   form,
   file: { id, fileid, tags, metadata }
-} = await instance.Bucket.upload({
-  name: `account-vicjicama`,
+} = await instance.BucketFile.upload(`customer-bucket`, {
   fileid: "dbb16880501d4fedb42f581dae77f9a8.png",
   input: { tags: ["backup"], metadata: { dhr: 1.0 } }
 });
@@ -130,7 +118,6 @@ const {
 
 Remove a file from a bucket
 
-- **siteid**: This is your API Key
 - **name**: Bucket name
 - **fileid**: File ID
 
@@ -142,22 +129,17 @@ The file and all the minimaps will be deleted without any way to rollback or rec
   <TabItem value="graphql" label="GraphQL" default>
 
 ```graphql
-mutation SiteBucketFileRemove(
-  $siteid: String!
+mutation BucketFileRemove(
   $name: String!
   $fileid: String!
 ) {
   viewer {
     account {
-      sites {
-        site(siteid: $siteid) {
-          buckets {
-            bucket(name: $name) {
-              files {
-                remove(fileid: $fileid) {
-                  id
-                }
-              }
+      buckets {
+        get(name: $name) {
+          files {
+            remove(fileid: $fileid) {
+              id
             }
           }
         }
@@ -171,10 +153,7 @@ mutation SiteBucketFileRemove(
   <TabItem value="nodejs" label="NodeJS">
 
 ```js
-const result = await instance.Bucket.remove({
-  name: `account-vicjicama`,
-  fileid: "dbb16880501d4fedb42f581dae77f9a8.png"
-});
+const result = await instance.BucketFile.remove(`images-bucket`, "dbb16880501d4fedb42f581dae77f9a8.png");
 ```
 
   </TabItem>

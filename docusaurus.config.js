@@ -7,21 +7,23 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "BucketWS",
-  tagline: "API for Public & Private files over a CDN",
-  url: "https://bucket.listws.com",
-  baseUrl: "/",
+  tagline: "API for images, zip & private files",
+  url: "https://www.bucketws.com",
+  baseUrl: "/docs/bucket/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.ico",
+  staticDirectories:["static"],
+  favicon:
+    "https://www.bucketws.com/documents/file/6240660aeb0cd5f51883a14219a5305a.ico",
   organizationName: "repoflow", // Usually your GitHub org/user name.
   projectName: "bucketws-docs", // Usually your repo name.
   scripts: [
-    "https://bucket.listws.com/_PWSR_/lib/pkg/v2/pagews/index.js",
-    "https://bucket.listws.com/_PWSR_/lib/basicLightbox/basicLightbox.min.js",
-    "/js/images.js"
+    "/libs/basicLightbox/basicLightbox.min.js",
+    "/package/images-lib/latest/index.js",
+    "/docs/bucket/js/images.js",
   ],
   stylesheets: [
-    "https://bucket.listws.com/_PWSR_/lib/basicLightbox/basicLightbox.min.css"
+    "/libs/basicLightbox/basicLightbox.min.css",
   ],
   presets: [
     [
@@ -31,14 +33,14 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
-          editUrl: "https://bucket.listws.com"
+          editUrl: "https://www.bucketws.com",
         },
 
         theme: {
-          customCss: require.resolve("./src/css/custom.css")
-        }
-      })
-    ]
+          customCss: require.resolve("./src/css/custom.css"),
+        },
+      }),
+    ],
   ],
 
   themeConfig:
@@ -47,33 +49,33 @@ const config = {
       navbar: {
         title: "BucketWS",
         logo: {
-          alt: "API for Public & Private files over a CDN",
-          src: "img/logo.png"
+          alt: "API for images, zip & private files",
+          src: "https://www.bucketws.com/docs/bucket/img/logo.png",
         },
         items: [
           {
             type: "doc",
             docId: "intro",
             position: "left",
-            label: "Tutorial"
+            label: "Tutorial",
           },
           {
             type: "doc",
             docId: "api/intro",
             position: "left",
-            label: "API"
+            label: "API",
           },
           {
-            href: "https://bucket.listws.com",
+            href: "https://www.bucketws.com",
             label: "Website",
-            position: "left"
+            position: "left",
           },
           {
             href: "https://github.com/vicjicaman/bucketws-demo",
             label: "GitHub",
-            position: "right"
-          }
-        ]
+            position: "right",
+          },
+        ],
       },
       footer: {
         style: "dark",
@@ -83,36 +85,36 @@ const config = {
             items: [
               {
                 label: "Tutorial",
-                to: "/docs/intro"
-              }
-            ]
+                to: "/docs/intro",
+              },
+            ],
           },
           {
             title: "Community",
             items: [
               {
                 label: "Twitter",
-                href: "https://twitter.com/vicjicama"
-              }
-            ]
+                href: "https://twitter.com/vicjicama",
+              },
+            ],
           },
           {
             title: "More",
             items: [
               {
                 label: "GitHub",
-                href: "https://github.com/vicjicaman/bucketws-demo"
-              }
-            ]
-          }
+                href: "https://github.com/vicjicaman/bucketws-demo",
+              },
+            ],
+          },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} BucketWS. Built with Docusaurus.`
+        copyright: `Copyright © ${new Date().getFullYear()} BucketWS. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
-        darkTheme: darkCodeTheme
-      }
-    })
+        darkTheme: darkCodeTheme,
+      },
+    }),
 };
 
 module.exports = config;

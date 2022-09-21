@@ -13,16 +13,15 @@ You can include on your site the next script to automatically detect and change 
 Use any of your domains to get the image library, for example: **xxxxxx.pws-trial-uc1.xyz**.
 
 ```html
-<script src="https://xxxxxx.pws-trial-uc1.xyz/_PWSR_/lib/pkg/v2/pagews-image/index.js"></script>
+<script src="https://xxxxxx.pws-trial-uc1.xyz/package/uploader-lib/latest/index.js"></script>
 ```
 
 ## Usage
 
-Now use the minimap URL on the **data-src** attribute as in this example:
+Now use the minimap URL on the **src** attribute as in this example:
 
 ```html
-<img
-  data-src="https://util-files.listws.com/_PWSR_/files/minimaps/buckets/photos/9aca4aa83e79507630361b8fad6a7561.jpg/xs.webp"
+<img src="https://www.bucketws.com/images/file/9aca4aa83e79507630361b8fad6a7561.jpg"
 />
 ```
 
@@ -34,5 +33,5 @@ Thats all, we will take care of request and download the right image size.
 You can resize your screen or check the image on any device, the image will be automatically changed to get the optimal image size.
 
 <div className="image-container">
-<img alt="Demo home page on localhost" className="image" data-src="https://util-files.listws.com/_PWSR_/files/minimaps/buckets/photos/9aca4aa83e79507630361b8fad6a7561.jpg/xs.webp" />
+<img alt="Demo home page on localhost" className="image" src="https://www.bucketws.com/images/file/9aca4aa83e79507630361b8fad6a7561.jpg" />
 </div>

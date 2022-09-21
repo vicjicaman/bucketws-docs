@@ -10,7 +10,8 @@ BucketWS is a service to let you create private or public file buckets that will
 - Authorize the viewer to see a private bucket files
 - Manipulate and list files from a public & private bucket
 - Upload a file anonymously to a bucket
-- Automatic down-scale and render images
+- Automatic down-scale images
+- Automatic uncompress of zip files
 - Automatic sync of the upload widget with the backend configuration.
 
 #### How this service and API can help me
@@ -32,6 +33,10 @@ You can also use any control or widget to upload your files to a bucket.
 
 You can use a custom domain to deliver all your assets, avoid noisy neighbors, improve your SEO score and increase visitor confidence.
 
+## Zip files
+
+Upload and automatically get zip files uncompressed.
+
 ## Optimized images
 
 The uploaded images are automatically optimized, an array of images will be automatically created with different sizes.
@@ -42,5 +47,5 @@ The next image has a 50% width style, you can resize this window to see how the 
 display: 'flex',
 justifyContent: 'center'
 }}>
-<img style={{width: '50%', margin: 'auto'}} data-src="https://util-files.listws.com/_PWSR_/files/minimaps/buckets/photos/7a81c6468fb464ce04b9e323f9c5a8e1.jpg/xs.webp" />
+<img style={{width: '50%', margin: 'auto'}} src="https://www.bucketws.com/images/file/ba3dcb031f209c883d98c82f21ebaf73.jpg" />
 </div>

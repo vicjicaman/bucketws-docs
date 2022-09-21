@@ -1,5 +1,5 @@
-setInterval(function() {
-  var imgs = document.querySelectorAll("img[data-src]");
+setInterval(function () {
+  var imgs = document.querySelectorAll("img");
 
   for (const img of imgs) {
     const processed = img.getAttribute("processed");
@@ -7,7 +7,7 @@ setInterval(function() {
     if (!processed) {
       img.setAttribute("processed", "true");
 
-      img.onclick = e => {
+      img.onclick = (e) => {
         const fileid = e.target.src;
 
         if (
@@ -24,15 +24,16 @@ setInterval(function() {
         const instance = basicLightbox.create(`
 
         <div>
-            <img style="width:${w *
-              0.75}px;" data-src="${fileid}" processed="true" />
+            <img style="width:${
+              w * 0.75
+            }px;" src="${fileid}" processed="true" />
         </div>
 
 
     `);
         instance.show();
 
-        document.body.addEventListener("keydown", e => {
+        document.body.addEventListener("keydown", (e) => {
           if (e.keyCode === 27) {
             instance.close();
           }
@@ -40,4 +41,4 @@ setInterval(function() {
       };
     }
   }
-}, 200);
+}, 500);

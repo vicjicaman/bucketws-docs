@@ -10,7 +10,7 @@ In this documentation you will find the GraphQL queries to perform a post reques
 
 ## API endpoint
 
-The GraphQL endpoint is: https://api.pagews.com/v2/bucket/api
+The GraphQL endpoint is: https://DOMAIN/api/bucket
 
 ## NodeJS - @bucketws/api
 
@@ -28,18 +28,17 @@ Initialize a helper instance
 ```js
 const { init } = require("@bucketws/api");
 const instance = init({
-  url: `https://api.pagews.com/v2/bucket/api`,
-  key: process.env.API_KEY,
-  secret: process.env.API_SECRET
+  url: `https://${process.env.DOMAIN}/api/bucket`,
+  secret: process.env.API_KEY
 });
 ```
 
 Make a call to the endpoints, you can find the call examples on the **NodeJS** tab
 
 ```js
-const { form } = await instance.BucketFile.upload({
-  name: "public-test",
+const { form } = await instance.BucketFile.upload(name: "public-test", {
   fileid,
+  description:"",
   tags: ["draft"]
 });
 ```
@@ -51,33 +50,29 @@ This is an example of a post call to get a Bucket details
 ```js
 const axios = require("axios");
 
-export default async ({ key, secret }) => {
-  const authorization = `${key}/${secret}`;
-  const url = `https://api.pagews.com/v2/bucket/api`;
+export default async ({ secret }) => {
+  const authorization = `${secret}`;// Your API key
+  const url = `https://DOMAIN/api/bucket`;
 
-  const query = `query SiteBucketGet($siteid: String!, $name: String!) {
+  const query = `query BucketGet($name: String!) {
     viewer {
       account {
-        sites {
-          site(siteid: $siteid) {
-            buckets {
-              bucket(name: $name) {
-                id
-                name
-                private
-                exts
-                minSize
-                maxSize
-                preview
-              }
-            }
+          buckets {
+            get(name: $name) {
+              id
+              name
+              private
+              exts
+              minSize
+              maxSize
+              preview
           }
         }
       }
     }
   }`;
 
-  const variables = { siteid: key, name: "test-public" };
+  const variables = { name: "test-public" };
 
   try {
     const response = await axios(url, {

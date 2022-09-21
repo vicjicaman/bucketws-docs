@@ -11,29 +11,24 @@ import TabItem from '@theme/TabItem';
 
 Get the details from a bucket, the bucket will be null if it does not exists
 
-- **siteid**: This is your API Key
 - **name**: Bucket name
 
 <Tabs>
   <TabItem value="graphql" label="GraphQL" default>
 
 ```graphql
-query SiteBucketGet($siteid: String!, $name: String!) {
+query BucketGet($name: String!) {
   viewer {
     account {
-      sites {
-        site(siteid: $siteid) {
-          buckets {
-            bucket(name: $name) {
-              id
-              name
-              private
-              exts
-              minSize
-              maxSize
-              preview
-            }
-          }
+      buckets {
+        get(name: $name) {
+          id
+          name
+          private
+          exts
+          minSize
+          maxSize
+          preview
         }
       }
     }
@@ -65,23 +60,19 @@ const {
 
 Get the authorization token for the bucket, this token will be used on the client side to request the authorization cookie
 
-- **siteid**: This is your API Key
+
 - **name**: Bucket name
 
 <Tabs>
   <TabItem value="graphql" label="GraphQL" default>
 
 ```graphql
-query SiteBucketAuthorize($siteid: String!, $name: String!) {
+query BucketAuthorize($name: String!) {
   viewer {
     account {
-      sites {
-        site(siteid: $siteid) {
-          buckets {
-            bucket(name: $name) {
-              authorize
-            }
-          }
+      buckets {
+        get(name: $name) {
+          authorize
         }
       }
     }
@@ -105,28 +96,24 @@ const token = await instance.BucketFile.authorize({
 
 Get a list of buckets for the domain
 
-- **siteid**: This is your API Key
+
 
 <Tabs>
   <TabItem value="graphql" label="GraphQL" default>
 
 ```graphql
-query SiteBucketList($siteid: String!) {
+query BucketList {
   viewer {
     account {
-      sites {
-        site(siteid: $siteid) {
-          buckets {
-            list {
-              id
-              name
-              private
-              exts
-              minSize
-              maxSize
-              preview
-            }
-          }
+      buckets {
+        list {
+          id
+          name
+          private
+          exts
+          minSize
+          maxSize
+          preview
         }
       }
     }
@@ -148,12 +135,12 @@ const list = await instance.Bucket.list();
 
 Create a bucket
 
-- **siteid**: This is your API Key
+
 - **name**: Bucket name
-- **input**: An object SiteBucketCreateInput with the input details for the bucket
+- **input**: An object BucketCreateInput with the input details for the bucket
 
 ```graphql
-input SiteBucketCreateInput {
+input BucketCreateInput {
   private: Boolean!
   exts: [String]!
   minSize: Int!
@@ -166,27 +153,22 @@ input SiteBucketCreateInput {
   <TabItem value="graphql" label="GraphQL" default>
 
 ```graphql
-mutation SiteBucketCreate(
-  $siteid: String!
+mutation BucketCreate(
   $name: String!
-  $input: SiteBucketCreateInput!
+  $input: BucketCreateInput!
 ) {
   viewer {
     account {
-      sites {
-        site(siteid: $siteid) {
-          buckets {
-            create(name: $name, input: $input) {
-              id
-              name
-              private
-              exts
-              minSize
-              maxSize
-              preview
-              status
-            }
-          }
+      buckets {
+        create(name: $name, input: $input) {
+          id
+          name
+          private
+          exts
+          minSize
+          maxSize
+          preview
+          status
         }
       }
     }
@@ -208,7 +190,7 @@ const {
   preview,
   status
 } = await instance.Bucket.create({
-  name: `account-vicjicama`,
+  name: `images-bucket`,
   private: false,
   exts: ["csv"],
   minSize: 100,
@@ -224,12 +206,12 @@ const {
 
 Update a bucket
 
-- **siteid**: This is your API Key
+
 - **name**: Bucket name
-- **input**: An object SiteBucketInput with the input details for the bucket
+- **input**: An object BucketInput with the input details for the bucket
 
 ```graphql
-input SiteBucketInput {
+input BucketInput {
   exts: [String]!
   minSize: Int!
   maxSize: Int!
@@ -241,28 +223,23 @@ input SiteBucketInput {
   <TabItem value="graphql" label="GraphQL" default>
 
 ```graphql
-mutation SiteBucketUpdate(
-  $siteid: String!
+mutation BucketUpdate(
   $name: String!
-  $input: SiteBucketInput!
+  $input: BucketInput!
 ) {
   viewer {
     account {
-      sites {
-        site(siteid: $siteid) {
-          buckets {
-            bucket(name: $name) {
-              update(input: $input) {
-                id
-                name
-                private
-                exts
-                minSize
-                maxSize
-                preview
-                status
-              }
-            }
+      buckets {
+        get(name: $name) {
+          update(input: $input) {
+            id
+            name
+            private
+            exts
+            minSize
+            maxSize
+            preview
+            status
           }
         }
       }
@@ -300,7 +277,7 @@ const {
 
 Destroy a bucket
 
-- **siteid**: This is your API Key
+
 - **name**: Bucket name
 
 :::danger Warning!
@@ -311,16 +288,12 @@ All the files associated with the bucket will be deleted without any way to roll
   <TabItem value="graphql" label="GraphQL" default>
 
 ```graphql
-mutation SiteBucketDestroy($siteid: String!, $name: String!) {
+mutation BucketDestroy($name: String!) {
   viewer {
     account {
-      sites {
-        site(siteid: $siteid) {
-          buckets {
-            bucket(name: $name) {
-              destroy
-            }
-          }
+      buckets {
+        get(name: $name) {
+          destroy
         }
       }
     }
@@ -332,9 +305,7 @@ mutation SiteBucketDestroy($siteid: String!, $name: String!) {
   <TabItem value="nodejs" label="NodeJS">
 
 ```js
-const result = await instance.Bucket.destroy({
-  name: `account-vicjicama`
-});
+const result = await instance.Bucket.destroy(`images-bucket`);
 ```
 
   </TabItem>

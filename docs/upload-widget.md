@@ -49,7 +49,7 @@ Here is a description of all the methods and properties that are used on this ex
 This is a code example for a simple uploader configuration
 
 ```js
-const uploadObj = PageWSLib.Upload.create({
+const uploadObj = window.uploader.create({
   id: "uploader-target",
   domain,
   bucket,

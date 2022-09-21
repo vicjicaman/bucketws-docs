@@ -12,13 +12,11 @@ You can find the repository here: https://github.com/vicjicaman/bucketws-demo
 
 ## Prerequisites
 
-You need an account to get your API Keys and create your test buckets for this demo, here are the overall steps for the prerequisites:
+You need an account to get your API Key and create your test buckets for this demo, here are the overall steps for the prerequisites:
 
-- Create an account at https://bucket.listws.com/v2/auth/en-US/register
-- Create a private bucket named test-private
+- Create an account at https://app.bucketws.com/auth/app/register
 - Create a public bucket named test-public
-- Create an API secret on the API Keys section
-- Get the localhost access key on the section Domain -> CORS
+- Get the API Key
 
 For a more detailed guide of the previous steps please go to the page **[prerequisites](/docs/prerequisites)**
 
@@ -45,8 +43,6 @@ Create a file .env on the repository folder with the next content, replace the v
     BUCKET_PUBLIC=test-public
     BUCKET_PRIVATE=test-private
     API_KEY=kkkkkkkk-kkkk-kkkk-kkkk-kkkkkkkkkkkk
-    API_SECRET=ssssssss-ssss-ssss-ssss-sssssssssss
-    LOCALHOST_ACCESS_KEY=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
 ```
 
 ## Start
@@ -60,7 +56,7 @@ yarn start
 You should see the demo dashboard like the one on the next picture.
 
 <div className="image-container">
-<img alt="Demo home page on localhost" className="image" data-src="https://util-files.listws.com/_PWSR_/files/minimaps/buckets/bucketws-docs/dbb16880501d4fedb42f581dae77f9a8.png/xs.webp" />
+<img alt="Demo home page on localhost" className="image" src="https://www.bucketws.com/images/file/ffea01a61d8cec20c620f083bd46a29a.png" />
 </div>
 
 ## The API instance
@@ -78,11 +74,10 @@ The next snip show how to get the instance object, you will need the API URL, yo
 ```js
 const { init } = require("@bucketws/api");
 
-const release = process.env.RELEASE || "v2";
+const domain = process.env.DOMAIN;
 const instance = init({
-  url: `https://api.pagews.com/${release}/bucket/api`,
-  key: process.env.API_KEY,
-  secret: process.env.API_SECRET
+  url: `https://${domain}/api/bucket`,
+  secret: process.env.API_KEY;
 });
 ```
 
@@ -98,28 +93,26 @@ We need two components:
 
 To generate signed form data to upload a file you will need 3 things:
 
-- **name**: The bucket name
+- **description**: A text description for the file
 - **fileid**: A file ID, this must be unique for all the files in your bucket, we recommend to use some kind of hash of the file content, the BucketWS upload widget use the md5 hash of the content by default.
 - **tags**: An array of strings to help you manage your bucket files.
 
 We will call the API instance method **BucketFile.upload**, this method will return the signed form data to perform the file upload to the backend, you should return this form data to your client.
 
 ```js
-app.post("/app/signed-from-server/:mode", async function(req, res) {
+app.post("/app/signed-from-server/:mode", async function (req, res) {
   const { mode } = req.params;
   const { fileid, tags } = req.body;
 
-  const { form } = await instance.BucketFile.upload({
-    name: mode === "public" ? bucketPublic : bucketPrivate,
+  const { form } = await instance.BucketFile.upload(bucketPublic, {
     fileid,
-    tags
+    tags,
+    description: ""
   });
 
   res.json({ form });
 });
 ```
-
-We have the **mode** parameter because we are going to use the same route to upload files to the other private test bucket, as you can see, we only need to change the target bucket name.
 
 :::danger Real app hint!
 In a real world application the signed form only will be delivered to a logged in user
@@ -152,20 +145,19 @@ And the callbacks for the upload cycle
 - **onUploading**: This callback will be called when the file is being uploaded to the backend.
 - **onUploaded**: Use this callback to execute code once the file upload is finished.
 - **onReady**: There is a small delay between the finish of the file upload and the file availability on the CDN route, this callback will be executed on the file is available to be access over the CDN
-- **onMinimapReady**: If the uploaded file generates a minimap (down-scaled images) then this callback will be called on the minimaps are ready to be accessed from the CDN
 - **onError**: This callback will be executed if there is an issue with the upload operation, you can access details about the cause of the issue in the params of the callback
 
 Here is the code snip as in the repository, the content of the callback methods on this example is just to let the user have a visual hint of the current state of the uploaded file
 
 ```js
-var uploadObj = PageWSLib.Upload.create({
+var uploadObj = window.uploader.create({
   id: "uploader-target",
   domain,
   bucket,
   tags: ["test", "tutorial"],
   method: {
     type: "post",
-    config: { url: "/app/signed-from-server/<%=bucketMode%>" }
+    config: { url: "/app/signed-from-server/<%=bucketMode%>" },
   },
   component: {
     type: "simple-selector",
@@ -184,9 +176,9 @@ var uploadObj = PageWSLib.Upload.create({
       errorClass: "alert alert-danger",
       labels: {
         select: "Choose file",
-        browse: "Browse"
-      }
-    }
+        browse: "Browse",
+      },
+    },
   },
   immediate,
   onSelected: ({ file, fileid }) => {
@@ -206,7 +198,7 @@ var uploadObj = PageWSLib.Upload.create({
       </div>
     </div>`;
   },
-  onReady: params => {
+  onReady: (params) => {
     if (!allowFetch) {
       const result = document.getElementById("uploader-result");
       result.innerHTML = ``;
@@ -226,18 +218,11 @@ var uploadObj = PageWSLib.Upload.create({
       }
     }
   },
-  onMinimapReady: params => {
-    if (!allowFetch) {
-      return;
-    }
-
-    printMinimapResult(params);
-  },
   onError: ({ fileid }) => {
     if (immediate === false) {
       trigger.style.display = "block";
     }
-  }
+  },
 });
 ```
 
@@ -248,7 +233,7 @@ In a real world application you need to include the credentials or set the heade
 This demo use the **onMinimapReady** to display the images in different column sizes, so that you can see how the right image size is displayed depending on the image width
 
 <div className="image-container">
-<img alt="Upload file to public bucket" className="image" data-src="https://util-files.listws.com/_PWSR_/files/minimaps/buckets/bucketws-docs/933d92928ed2793530461aaaf8eef90c.png/xs.webp" />
+<img alt="Upload file to public bucket" className="image" src="https://util-files.listws.com/_PWSR_/files/minimaps/buckets/bucketws-docs/933d92928ed2793530461aaaf8eef90c.png/xs.webp" />
 </div>
 
 ## Server signed to private
@@ -266,9 +251,9 @@ To authorize a viewer to have access to the bucket file you need to perform two 
 The server side of the authorization is very straight forward, all you need to do if to call the API method **Bucket.authorize** with the bucket name as a parameter.
 
 ```js
-app.post("/app/authorize-private-from-server", async function(req, res) {
+app.post("/app/authorize-private-from-server", async function (req, res) {
   const token = await instance.Bucket.authorize({
-    name: bucketPrivate
+    name: bucketPrivate,
   });
   res.json({ token });
 });
@@ -286,7 +271,7 @@ On the client side, you need to call the previous route to get the token, once y
 const response = await fetch(
   new Request(`/app/authorize-private-from-server`, {
     method: "POST",
-    cors: true
+    cors: true,
   }),
   { mode: "cors" }
 );
@@ -303,11 +288,9 @@ There are other two methods that are being used on the demo:
 - **PageWSLib.Image.auth**: Use this method to get information about the current authorization.
 - **PageWSLib.Image.logout**: Use this method to remove the authorization to the bucket.
 
-
 <div className="image-container">
-<img alt="Upload file to public bucket" className="image" data-src="https://util-files.listws.com/_PWSR_/files/minimaps/buckets/bucketws-docs/82bd6d277cb9b51211de78dfaa839a89.png/xs.webp" />
+<img alt="Upload file to public bucket" className="image" src="https://util-files.listws.com/_PWSR_/files/minimaps/buckets/bucketws-docs/82bd6d277cb9b51211de78dfaa839a89.png/xs.webp" />
 </div>
-
 
 ## Video summary
 
