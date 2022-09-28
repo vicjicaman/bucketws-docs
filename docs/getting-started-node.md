@@ -194,7 +194,7 @@ var uploadObj = window.uploader.create({
     result.innerHTML = `
     <div class="row">
       <div class="col">
-        <img src="${loaderUrl}" />
+        <img data-zoom="75" src="${loaderUrl}" />
       </div>
     </div>`;
   },
@@ -205,18 +205,17 @@ var uploadObj = window.uploader.create({
       return;
     }
 
-    const { isMinimap, isImage } = params;
+    const { isImage } = params;
     if (immediate === false) {
       trigger.style.display = "block";
     }
 
-    if (!isMinimap) {
-      if (isImage) {
-        printImageResult(params);
-      } else {
-        printFileResult(params);
-      }
+    if (isImage) {
+      printImageResult(params);
+    } else {
+      printFileResult(params);
     }
+    
   },
   onError: ({ fileid }) => {
     if (immediate === false) {
@@ -230,11 +229,6 @@ var uploadObj = window.uploader.create({
 In a real world application you need to include the credentials or set the headers for the method/post request to authrize the signed form route, for more details see the **Uploader Widget** section.
 :::
 
-This demo use the **onMinimapReady** to display the images in different column sizes, so that you can see how the right image size is displayed depending on the image width
-
-<div className="image-container">
-<img alt="Upload file to public bucket" className="image" src="https://util-files.listws.com/_PWSR_/files/minimaps/buckets/bucketws-docs/933d92928ed2793530461aaaf8eef90c.png/xs.webp" />
-</div>
 
 ## Server signed to private
 
@@ -262,35 +256,6 @@ app.post("/app/authorize-private-from-server", async function (req, res) {
 :::danger Real app hint!
 In a real world application you need to check that the logged in user have access to the bucket to be authorized.
 :::
-
-### Cookie authorization
-
-On the client side, you need to call the previous route to get the token, once you have the token you need to call the function **PageWSLib.Image.login** for the bucket's domain, this function will create a cookie for the viewer user to authorize the view or download of the files.
-
-```js
-const response = await fetch(
-  new Request(`/app/authorize-private-from-server`, {
-    method: "POST",
-    cors: true,
-  }),
-  { mode: "cors" }
-);
-
-if (response.status === 200) {
-  const responseJson = await response.json();
-  const { token } = responseJson;
-  await PageWSLib.Image.login(domain, token);
-}
-```
-
-There are other two methods that are being used on the demo:
-
-- **PageWSLib.Image.auth**: Use this method to get information about the current authorization.
-- **PageWSLib.Image.logout**: Use this method to remove the authorization to the bucket.
-
-<div className="image-container">
-<img alt="Upload file to public bucket" className="image" src="https://util-files.listws.com/_PWSR_/files/minimaps/buckets/bucketws-docs/82bd6d277cb9b51211de78dfaa839a89.png/xs.webp" />
-</div>
 
 ## Video summary
 

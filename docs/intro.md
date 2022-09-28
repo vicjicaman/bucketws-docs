@@ -47,5 +47,6 @@ The next image has a 50% width style, you can resize this window to see how the 
 display: 'flex',
 justifyContent: 'center'
 }}>
-<img style={{width: '50%', margin: 'auto'}} src="https://www.bucketws.com/images/file/ba3dcb031f209c883d98c82f21ebaf73.jpg" />
+<img data-zoom="75" style={{width: '50%', margin: 'auto'}} src="https://www.bucketws.com/images/file/ba3dcb031f209c883d98c82f21ebaf73.jpg" />
 </div>
+ 

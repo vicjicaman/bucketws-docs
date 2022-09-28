@@ -16,6 +16,6 @@ Create an account at https://www.bucketws.com/auth/app/register
 Create two buckets named test-private and test-public
 
 <div className="image-container">
-<img alt="Create public bucket" className="image" src="https://www.bucketws.com/images/file/8ceccbb4233d54a391114e4e88ee7c69.png" />
+<img data-zoom="75" alt="Create public bucket" className="image" src="https://www.bucketws.com/images/file/8ceccbb4233d54a391114e4e88ee7c69.png" />
 </div>
 

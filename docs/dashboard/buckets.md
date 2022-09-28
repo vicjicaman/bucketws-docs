@@ -11,7 +11,7 @@ This is the home page for your addon buckets and domain configuration
 All the images that are displayed on this documentation are stored on a bucket.
 
 <div className="image-container">
-<img alt="Buckets list" className="image" src="https://www.bucketws.com/images/file/7bb3c75762736042cc1f80b251085713.png" />
+<img data-zoom="75" alt="Buckets list" className="image" src="https://www.bucketws.com/images/file/7bb3c75762736042cc1f80b251085713.png" />
 </div>
 
 ### Review buckets created by API calls

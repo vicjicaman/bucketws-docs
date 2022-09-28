@@ -63,7 +63,7 @@ const uploadObj = window.uploader.create({
     config: {
       preview: true,
       controlLoadingAreaClass: "text-center",
-      controlLoadingAreaContent: `<img src="${loaderUrl}" />`,
+      controlLoadingAreaContent: `<img data-zoom="75" src="${loaderUrl}" />`,
       previewImageClass: "w-50 my-4",
       previewAreaClass: "text-center",
       controlAreaClass: "mb-4",

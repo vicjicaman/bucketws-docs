@@ -12,19 +12,18 @@ const config = {
   baseUrl: "/docs/bucket/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  staticDirectories:["static"],
+  staticDirectories: ["static"],
   favicon:
     "https://www.bucketws.com/documents/file/6240660aeb0cd5f51883a14219a5305a.ico",
   organizationName: "repoflow", // Usually your GitHub org/user name.
   projectName: "bucketws-docs", // Usually your repo name.
   scripts: [
-    "/libs/basicLightbox/basicLightbox.min.js",
-    "/package/images-lib/latest/index.js",
-    "/docs/bucket/js/images.js",
+    {
+      src: "/package/images-lib/latest/index.js",
+      defer: true,
+    },
   ],
-  stylesheets: [
-    "/libs/basicLightbox/basicLightbox.min.css",
-  ],
+  stylesheets: [],
   presets: [
     [
       "@docusaurus/preset-classic",
