@@ -1,3 +1,6 @@
 # bucketws-docs
 
-Docs: https://www.bucketws.com/docs/bucket/
+https://www.bucketws.com/docs/bucket/
+
+For more details visit: https://www.bucketws.com
+Sign up: https://app.bucketws.com
